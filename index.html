@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>WebGIS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <style>
+      html,
+      body,
+      #map {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map = L.map("map").setView([-6.25772890880713, 106.89540342846811], 10);
+
+      var basemap0 = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      });
+
+      var Esri_WorldImagery = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        attribution: "Tiles &copy; Ade Ahmad Faizal &mdash; 23611112 Statistics Program Study at Universitas Islam Indonesia",
+      });
+
+      var OpenTopoMap = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+        maxZoom: 17,
+        attribution:
+          'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+      });
+
+      Esri_WorldImagery.addTo(map);
+
+      var baseMaps = {
+        "Open Street Map": basemap0,
+        "Open Topo Map": OpenTopoMap,
+        "Esri WorldImagery": Esri_WorldImagery,
+      };
+
+      var Layers = {};
+      var layerControl = L.control.layers(baseMaps, Layers, { collapsed: false });
+      layerControl.addTo(map);
+
+      var customIcon1 = L.icon({
+        iconUrl: "./asset/Pharmacy Location.png",
+        iconSize: [40, 40],
+      });
+
+      var markers = [
+        { coords: [-6.2251755, 106.898982], popup: "Jl. Pahlawan Revolusi No.7, RT.4/RW.1, Pd. Bambu, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13430", tooltip: "Apotek Violet Farma (Buka 24 Jam)" },
+        { coords: [-6.1990617, 106.885804], popup: "Jl. Balai Pustaka No.16, RT.4/RW.11, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220", tooltip: "Apotek K-24 Rawamangun Jakarta" },
+        { coords: [-6.2230189, 106.8975027], popup: "Jl. Cipinang Muara 2 No.20 1, RT.1/RW.4, Klender, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13430", tooltip: "Apotik Garda Medika" },
+        { coords: [-6.2120871, 106.8788485], popup: "Jl. Pisangan Lama III No.7, RT.6/RW.8, Pisangan Tim., Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13230", tooltip: "Apotek & Klinik Pratama Melati" },
+        { coords: [-6.201711799999999, 106.8557027], popup: "Jl. Matraman Raya No.36, Kb. Manggis, Kec. Matraman, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13150", tooltip: "Apotek K-24 Matraman Jakarta Timur" },
+        { coords: [-6.2193381, 106.8996653], popup: "Jl. Pahlawan Revolusi No.41, RT.4/RW.8, Klender, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13470", tooltip: "Apotek K-24 Pahlawan Revolusi Jakarta Timur" },
+        { coords: [-6.229664, 106.8670122], popup: "Jl. Otto Iskandardinata No.54, RT.1/RW.3, Bidara Cina, Kecamatan Jatinegara, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13330", tooltip: "Apotek K-24 Otista Raya" },
+        { coords: [-6.2451396, 106.9349399], popup: "Jl. Pd. Kelapa Raya No.2 Blok E10, RT.9/RW.4, Pd. Klp., Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13450", tooltip: "Apotek K-24 Pondok Kelapa Jakarta Timur" },
+        {
+          coords: [-6.2239683, 106.8848625],
+          popup: "Jl. Cipinang Jaya Raya No.9 Blok A, RT.4/RW.7, Cipinang Besar Sel., Kecamatan Jatinegara, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13410",
+          tooltip: "Apotek K-24 Cipinang Jaya Jakarta Timur",
+        },
+        { coords: [-6.2203233, 106.9220216], popup: "Jl. Buaran Raya No.91, RT.1/RW.14, Klender, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13440", tooltip: "Apotek Kimia Farma Buaran" },
+        { coords: [-6.2638069, 106.8678361], popup: "Jl. Cililitan Besar No.72D, RT.7/RW.1, Kramat Jati, Kec. Kramat jati, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13510", tooltip: "Apotek K 24" },
+        { coords: [-6.199948099999999, 106.8858227], popup: "Jl. Balai Pustaka Timur No.10-11, RT.4/RW.11, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220", tooltip: "Apotik Rini" },
+        { coords: [-6.199402999999999, 106.889917], popup: "Jl. Pegambiran No.33 C, RT.9/RW.8, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220", tooltip: "Apotek Kimia Farma Rawamangun" },
+        { coords: [-6.2208781, 106.9127971], popup: "Jl. Duren Sawit Raya (dermaga) No.12 Blok H-2, RT.7/RW.10, Duren Sawit, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13470", tooltip: "Duren Sawit Pharmacy" },
+        { coords: [-6.18464, 106.9073376], popup: "Jalan Bekasi Raya, RT.06/RW.02, Pulo Gadung, RT.6/RW.2, Pulo Gadung, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13260", tooltip: "Apotek Zino Farma" },
+        { coords: [-6.210554799999999, 106.8603287], popup: "Jl. Matraman Raya No.151, RW.9, Palmeriam, Kec. Matraman, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13140", tooltip: "Apotek Djatinegara" },
+        { coords: [-6.2947926, 106.9042527], popup: "Jl. Monumen Pancasila Sakti, RT.RW 007/RW.2, Lubang Buaya, Kec. Cipayung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13810", tooltip: "Apotek Clara Jaya" },
+        {
+          coords: [-6.3468285, 106.873652],
+          popup: "Jalan Raya Lapangan Tembak Blok Mesjid 4 No.17, RT.12/RW.2, Cibubur, Ciracas, RT.3/RW.1, Cibubur, Kec. Ciracas, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13720",
+          tooltip: "Rakyat Anda Pharmacy",
+        },
+        {
+          coords: [-6.198705499999999, 106.8862363],
+          popup: "Jalan Balai Pustaka Timur Blok B11 No.39 RT.4/RW.9 Rawamangun Pulogadung RT.4, RT.4/RW.9, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220",
+          tooltip: "Apotek Sana Farma",
+        },
+        { coords: [-6.2193115, 106.9310914], popup: "Jl. Teratai Putih Raya Jl. Perumnas Raya No.2-3 Blok 18, RT.8/RW.14, Klender, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13440", tooltip: "Apotek Roxy Klender" },
+        { coords: [-6.2486437, 106.9232714], popup: "Jl. Curug Raya No.11 1, RT.1/RW.8, Pd. Klp., Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13450", tooltip: "Apotek K24 Curug Kalimalang" },
+        { coords: [-6.2533128, 106.9095975], popup: "Jl. Raya Jatiwaringin No.3 Blok H, RT.9/RW.7, Cipinang Melayu, Makasar, East Jakarta City, Jakarta 13620", tooltip: "Apotek Kimia Farma 295 Jatiwaringin" },
+        { coords: [-6.2351431, 106.8972094], popup: "Jl. Pahlawan Revolusi No.39, RW.4, Pd. Bambu, Kec. Duren Sawit, Daerah Khusus Ibukota Jakarta 13460", tooltip: "K-24 Pondok Bambu" },
+        { coords: [-6.201698499999999, 106.8884842], popup: "RW.8, Jl. Kedondong No.10, RT.15/RW.8, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220", tooltip: "Apotek Rawamangun" },
+        { coords: [-6.2114114, 106.8725969], popup: "Jl. Pisangan Baru Tengah No.16, RT.8/RW.15, Pisangan Baru, Kec. Matraman, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13110", tooltip: "Apotek K-24 Pisangan Baru Jakarta Timur" },
+        { coords: [-6.208521300000001, 106.9358553], popup: "Jl. Raya Penggilingan No.127 A, RT.7/RW.5, Penggilingan, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13940", tooltip: "Apotek Gita Farma" },
+        { coords: [-6.210815699999999, 106.9016664], popup: "Jl. Bekasi Timur Raya No.49 8, RT.8/RW.1, Jatinegara, Kec. Cakung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13250", tooltip: "Apotek Jayakarta" },
+        {
+          coords: [-6.220212999999999, 106.899703],
+          popup: "Jl. Pahlawan Revolusi No.53 3, RW.8, Klender, Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13470",
+          tooltip: "Apotek dan Klinik Kimia Farma 49 Pondok Bambu",
+        },
+        {
+          coords: [-6.243110499999999, 106.9345635],
+          popup: "Jl. Pondok Kelapa Kav DKI Blok E-9 No. 6 Timur DKI Jakarta, RT.6/RW.4, Pd. Klp., Kec. Duren Sawit, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13450",
+          tooltip: "Damai Apotik",
+        },
+        { coords: [-6.2178999, 106.8894212], popup: "Jl. Mulya Jaya No.17 15, RT.10/RW.4, Cipinang Muara, Kecamatan Jatinegara, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13420", tooltip: "Apotek Medika Prima Cipinang" },
+      ];
+
+      markers.forEach(function (marker) {
+        var m = L.marker(marker.coords, { icon: customIcon1 })
+          .bindPopup("<b>" + marker.popup + "</b>")
+          .addTo(map);
+
+        m.on("mouseover touchstart", function () {
+          m.bindTooltip(marker.tooltip).openTooltip();
+        });
+
+        m.on("mouseout touchend", function () {
+          m.closeTooltip();
+        });
+      });
+    </script>
+  </body>
+</html>
